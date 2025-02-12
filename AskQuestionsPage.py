@@ -14,20 +14,19 @@ def show_ask_questions_page():
     vector_store = get_vector_store()
 
     question_type = st.radio(
-        "What type of question do you want to ask?",
-        ["General Question", "Excel presentation"]
+        "Çfare lloj pyetje dëshironi të bëni?",
+        ["Pyetje të përgjithshme", "Prezantim i një Excel dokumenti"]
     )
 
-    user_question = st.text_input("Your question:")
-    #user_question = st.text_input("Pyetja juaj:")
+    user_question = st.text_input("Pyetja juaj:")
 
     if user_question:
-        with st.spinner("Processing your request..."):
-            if question_type == "Excel presentation" and 'current_df' in st.session_state:
+        with st.spinner("Procesimi i pyetjes tuaj..."):
+            if question_type == "Prezantim i një Excel dokumenti" and 'current_df' in st.session_state:
                 # Handle Excel calculations
                 df = st.session_state['current_df']
                 result_df = calculate_excel_columns(df, user_question)
-                st.write("### Result:")
+                st.write("### Rezulati:")
                 st.dataframe(result_df)
             else:
                 # Handle general questions using QA chain
@@ -38,5 +37,5 @@ def show_ask_questions_page():
                     retriever=vector_store.as_retriever(search_kwargs={"k": 5}),
                 )
                 response = qa_chain.run(user_question)
-                st.write("### Answer:")
+                st.write("### Pergjigja:")
                 st.write(response)

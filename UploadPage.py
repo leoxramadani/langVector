@@ -22,21 +22,21 @@ def process_file(file):
         return file.read().decode("utf-8")
 
 def show_upload_page():
-    st.title("Insert your document")
+    st.title("Shtoni një dokument")
 
     uploaded_file = st.file_uploader(
-        "Choose one document...", 
+        "Zgjedhni dokumentin tuaj...", 
         type=["txt", "pdf", "xlsx", "xls"]
     )
 
     if uploaded_file is not None:
-        with st.spinner("Your document is processing..."):
+        with st.spinner("Dokumenti juaj po procesohet..."):
             try:
                 # Process based on file type
                 if uploaded_file.type in ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"]:
                     # Preview Excel data first
                     df = pd.read_excel(uploaded_file)
-                    st.write("Preview of Excel data:")
+                    st.write("Prezantimi i të dhënave nga Excel:")
                     st.dataframe(df.head())
                     
                     # Store DataFrame in session state for later use
@@ -64,12 +64,12 @@ def show_upload_page():
                 metadata = [{"document_id": uploaded_file.name}] * len(chunks)
                 result = vector_store.add_texts(chunks, metadatas=metadata)
 
-                st.success("Your document has been inserted and successfully saved!")
-                st.info("Going to the next step...")
+                st.success("Dokumenti juaj është regjistruar me sukses!")
+                st.info("Kalimi në hapin tjeter...")
 
-                if st.button("Question phase"):
-                    st.session_state.page = "Question phase"
+                if st.button("Faza e pyetjeve"):
+                    st.session_state.page = "Pyetni sistemin"
                     
             except Exception as e:
-                st.error(f"Error processing file: {str(e)}")
+                st.error(f"Probleme me procesimin e dokumentit: {str(e)}")
                 st.info("Please make sure your Excel file is properly formatted and try again.")

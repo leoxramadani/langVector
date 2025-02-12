@@ -16,7 +16,7 @@ def render_sidebar():
         )
 
     st.sidebar.title("LLM, VectorDb & LangChain")
-    page = st.sidebar.radio("Navigoni në", ["Home", "Document insertion", "Ask a question"])
+    page = st.sidebar.radio("Navigoni në", ["Hyrja", "Insertimi i dokumenteve", "Pyetni sistemin"])
 
     st.sidebar.markdown(
             """
@@ -33,11 +33,11 @@ def main():
     st.set_page_config(page_title="LangChain & Qdrant App", layout="wide")
     page = render_sidebar()
 
-    if page == "Home":
+    if page == "Hyrja":
         show_home()
-    elif page == "Document insertion":
+    elif page == "Insertimi i dokumenteve":
         show_upload_page()
-    elif page == "Ask a question":
+    elif page == "Pyetni sistemin":
         show_ask_questions_page()
 
 if __name__ == "__main__":
